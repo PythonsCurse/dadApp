@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>From Nash</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>This is just for you dad</h1>
+      <h1 id="message">Loading...</h1>
+
+      <!-- Holder for the random media -->
+      <div id="media-holder"></div>
+    </div>
+  </div>
+
+  <script>
+  // Load the message
+  fetch("message.txt")
+    .then(res => res.text())
+    .then(text => document.getElementById("message").textContent = text)
+    .catch(() => document.getElementById("message").textContent = "Hope you like it!");
+
+  // Randomly show one item: an image or a video iframe
+  const mediaOptions = [
+    {
+      type: "embed",
+      src: "https://drive.google.com/file/d/1r1e4q6zMnCElb0oQqDp28Os5Zd_Rl7ul/preview"
+    }
+  ];
+
+  const chosen = mediaOptions[Math.floor(Math.random() * mediaOptions.length)];
+  const holder = document.getElementById("media-holder");
+
+  if (chosen.type === "image") {
+    const img = document.createElement("img");
+    img.src = chosen.src;
+    img.className = "media";
+    holder.appendChild(img);
+  } else if (chosen.type === "embed") {
+    const iframe = document.createElement("iframe");
+    iframe.src = chosen.src;
+    iframe.width = "100%";
+    iframe.height = "360";
+    iframe.allow = "autoplay";
+    iframe.setAttribute("allowfullscreen", true);
+    iframe.setAttribute("frameborder", "0");
+    iframe.className = "media";
+    holder.appendChild(iframe);
+  }
+</script>
+</body>
+</html>
