@@ -19,9 +19,9 @@
   </div>
 
   <script>
-  // Load the message
-  fetch("message.txt")
-    .then(res => res.text())
+  // ✅ FIXED: Load the actual raw message.txt from GitHub
+  fetch("https://raw.githubusercontent.com/pythonscurse/dadApp/main/message.txt")
+    .then(res => res.ok ? res.text() : Promise.reject("Missing"))
     .then(text => document.getElementById("message").textContent = text)
     .catch(() => document.getElementById("message").textContent = "Hope you like it!");
 
@@ -52,6 +52,6 @@
     iframe.className = "media";
     holder.appendChild(iframe);
   }
-</script>
+  </script>
 </body>
 </html>
