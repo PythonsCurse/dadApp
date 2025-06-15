@@ -15,7 +15,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 2rem;
     }
 
     .container {
@@ -37,6 +38,21 @@
     iframe {
       border: none;
     }
+
+    .refresh-button {
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      background-color: #3498db;
+      color: white;
+      cursor: pointer;
+    }
+
+    .refresh-button:hover {
+      background-color: #2980b9;
+    }
   </style>
 </head>
 <body>
@@ -45,19 +61,22 @@
       <h1>This is just for you dad</h1>
       <h1 id="message">Loading...</h1>
 
-      <!-- Holder for the random media -->
+      <!-- Media will be inserted here -->
       <div id="media-holder"></div>
+
+      <!-- ✅ Refresh Button -->
+      <button class="refresh-button" onclick="location.reload()">Show Another</button>
     </div>
   </div>
 
   <script>
-    // ✅ Load message from raw GitHub text file
+    // Load the message
     fetch("https://raw.githubusercontent.com/pythonscurse/dadApp/main/message.txt")
       .then(res => res.ok ? res.text() : Promise.reject("Missing"))
       .then(text => document.getElementById("message").textContent = text)
       .catch(() => document.getElementById("message").textContent = "Hope you like it!");
 
-    // ✅ Random media options from Google Drive
+    // Media list (use your real embed links)
     const mediaOptions = [
       {
         type: "embed",
@@ -81,6 +100,7 @@
       }
     ];
 
+    // Choose a random one
     const chosen = mediaOptions[Math.floor(Math.random() * mediaOptions.length)];
     const holder = document.getElementById("media-holder");
 
