@@ -5,26 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>From Nash</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
       background: #fffaf3;
-      color: #333;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      padding: 2rem;
+      padding: 1rem;
     }
 
     .container {
-      max-width: 90%;
-      width: 600px;
+      max-width: 600px;
+      width: 100%;
       background: white;
       padding: 2rem;
-      border-radius: 20px;
+      border-radius: 16px;
       box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
       text-align: center;
     }
@@ -35,12 +33,8 @@
       border-radius: 12px;
     }
 
-    iframe {
-      border: none;
-    }
-
     .refresh-button {
-      margin-top: 2rem;
+      margin-top: 1.5rem;
       padding: 0.75rem 1.5rem;
       font-size: 1rem;
       border: none;
@@ -57,62 +51,51 @@
 </head>
 <body>
   <div class="container">
-    <div class="card">
-      <h1>This is just for you dad</h1>
-      <h1 id="message">Loading...</h1>
+    <h1>This is just for you dad</h1>
+    <h2 id="message">Loading...</h2>
 
-      <!-- Media will be inserted here -->
-      <div id="media-holder"></div>
+    <div id="media-holder"></div>
 
-      <!-- ✅ Refresh Button -->
-      <button class="refresh-button" onclick="location.reload()">Show Another</button>
-    </div>
+    <button class="refresh-button" onclick="location.reload()">Show Another</button>
   </div>
 
   <script>
-    // Load the message
+    // Load message
     fetch("https://raw.githubusercontent.com/pythonscurse/dadApp/main/message.txt")
       .then(res => res.ok ? res.text() : Promise.reject("Missing"))
       .then(text => document.getElementById("message").textContent = text)
       .catch(() => document.getElementById("message").textContent = "Hope you like it!");
 
-    // Media list (use your real embed links)
+    // Google Drive direct download links
     const mediaOptions = [
       {
-        type: "embed",
-        src: "https://drive.google.com/file/d/1r1e4q6zMnCElb0oQqDp28Os5Zd_Rl7ul/preview"
+        type: "video",
+        src: "https://drive.google.com/uc?export=download&id=1r1e4q6zMnCElb0oQqDp28Os5Zd_Rl7ul"
       },
       {
-        type: "embed",
-        src: "https://drive.google.com/file/d/1D9xnNolARlsOxnBLbrn8HtRPUSp09SDa/preview"
+        type: "video",
+        src: "https://drive.google.com/uc?export=download&id=1D9xnNolARlsOxnBLbrn8HtRPUSp09SDa"
       },
       {
-        type: "embed",
-        src: "https://drive.google.com/file/d/1tDUdiFdUXDm2VcOiC7BNeWkTdljkJnEb/preview"
+        type: "video",
+        src: "https://drive.google.com/uc?export=download&id=1z5HoceGiGoisnSb6VEyNH2zWjzsWnx5e"
       },
       {
-        type: "embed",
-        src: "https://drive.google.com/file/d/1z5HoceGiGoisnSb6VEyNH2zWjzsWnx5e/preview"
-      },
-      {
-        type: "embed",
-        src: "https://drive.google.com/file/d/1eQt0SOUIaC5zcUn5dBh6nCaYgkP8dCf-/preview"
+        type: "video",
+        src: "https://drive.google.com/uc?export=download&id=1eQt0SOUIaC5zcUn5dBh6nCaYgkP8dCf-"
       }
     ];
 
-    // Choose a random one
     const chosen = mediaOptions[Math.floor(Math.random() * mediaOptions.length)];
     const holder = document.getElementById("media-holder");
 
-    if (chosen.type === "embed") {
-      const iframe = document.createElement("iframe");
-      iframe.src = chosen.src;
-      iframe.width = "100%";
-      iframe.height = "360";
-      iframe.allow = "autoplay";
-      iframe.setAttribute("allowfullscreen", true);
-      iframe.className = "media";
-      holder.appendChild(iframe);
+    if (chosen.type === "video") {
+      const video = document.createElement("video");
+      video.src = chosen.src;
+      video.controls = true;
+      video.playsInline = true;
+      video.className = "media";
+      holder.appendChild(video);
     }
   </script>
 </body>
