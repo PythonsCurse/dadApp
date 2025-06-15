@@ -9,28 +9,35 @@
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #fffaf3;
+      background: #f5f5f5;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       min-height: 100vh;
       padding: 1rem;
     }
 
     .container {
-      max-width: 600px;
       width: 100%;
+      max-width: 750px;
       background: white;
-      padding: 2rem;
+      padding: 1.5rem;
       border-radius: 16px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       text-align: center;
+    }
+
+    h1, h2 {
+      margin-top: 0;
     }
 
     .media {
       margin-top: 1rem;
       width: 100%;
+      max-height: 60vh;
+      object-fit: contain;
       border-radius: 12px;
+      cursor: pointer;
     }
 
     .refresh-button {
@@ -73,15 +80,15 @@
         src: "https://drive.google.com/uc?export=download&id=1r1e4q6zMnCElb0oQqDp28Os5Zd_Rl7ul"
       },
       {
-        type: "video",
+        type: "image",
         src: "https://drive.google.com/uc?export=download&id=1D9xnNolARlsOxnBLbrn8HtRPUSp09SDa"
       },
       {
-        type: "video",
+        type: "image",
         src: "https://drive.google.com/uc?export=download&id=1z5HoceGiGoisnSb6VEyNH2zWjzsWnx5e"
       },
       {
-        type: "video",
+        type: "image",
         src: "https://drive.google.com/uc?export=download&id=1eQt0SOUIaC5zcUn5dBh6nCaYgkP8dCf-"
       }
     ];
@@ -96,6 +103,21 @@
       video.playsInline = true;
       video.className = "media";
       holder.appendChild(video);
+    } else if (chosen.type === "image") {
+      const img = document.createElement("img");
+      img.src = chosen.src;
+      img.className = "media";
+      img.alt = "Photo";
+      img.onclick = () => {
+        if (img.requestFullscreen) {
+          img.requestFullscreen();
+        } else if (img.webkitRequestFullscreen) {
+          img.webkitRequestFullscreen();
+        } else if (img.msRequestFullscreen) {
+          img.msRequestFullscreen();
+        }
+      };
+      holder.appendChild(img);
     }
   </script>
 </body>
