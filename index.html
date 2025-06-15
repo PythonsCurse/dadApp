@@ -6,6 +6,38 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>From Nash</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #fffaf3;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      max-width: 90%;
+      width: 600px;
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .media {
+      margin-top: 1rem;
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    iframe {
+      border: none;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -19,39 +51,49 @@
   </div>
 
   <script>
-  // ✅ FIXED: Load the actual raw message.txt from GitHub
-  fetch("https://raw.githubusercontent.com/pythonscurse/dadApp/main/message.txt")
-    .then(res => res.ok ? res.text() : Promise.reject("Missing"))
-    .then(text => document.getElementById("message").textContent = text)
-    .catch(() => document.getElementById("message").textContent = "Hope you like it!");
+    // ✅ Load message from raw GitHub text file
+    fetch("https://raw.githubusercontent.com/pythonscurse/dadApp/main/message.txt")
+      .then(res => res.ok ? res.text() : Promise.reject("Missing"))
+      .then(text => document.getElementById("message").textContent = text)
+      .catch(() => document.getElementById("message").textContent = "Hope you like it!");
 
-  // Randomly show one item: an image or a video iframe
-  const mediaOptions = [
-    {
-      type: "embed",
-      src: "https://drive.google.com/file/d/1r1e4q6zMnCElb0oQqDp28Os5Zd_Rl7ul/preview"
+    // ✅ Random media options from Google Drive
+    const mediaOptions = [
+      {
+        type: "embed",
+        src: "https://drive.google.com/file/d/1r1e4q6zMnCElb0oQqDp28Os5Zd_Rl7ul/preview"
+      },
+      {
+        type: "embed",
+        src: "https://drive.google.com/file/d/1D9xnNolARlsOxnBLbrn8HtRPUSp09SDa/preview"
+      },
+      {
+        type: "embed",
+        src: "https://drive.google.com/file/d/1tDUdiFdUXDm2VcOiC7BNeWkTdljkJnEb/preview"
+      },
+      {
+        type: "embed",
+        src: "https://drive.google.com/file/d/1z5HoceGiGoisnSb6VEyNH2zWjzsWnx5e/preview"
+      },
+      {
+        type: "embed",
+        src: "https://drive.google.com/file/d/1eQt0SOUIaC5zcUn5dBh6nCaYgkP8dCf-/preview"
+      }
+    ];
+
+    const chosen = mediaOptions[Math.floor(Math.random() * mediaOptions.length)];
+    const holder = document.getElementById("media-holder");
+
+    if (chosen.type === "embed") {
+      const iframe = document.createElement("iframe");
+      iframe.src = chosen.src;
+      iframe.width = "100%";
+      iframe.height = "360";
+      iframe.allow = "autoplay";
+      iframe.setAttribute("allowfullscreen", true);
+      iframe.className = "media";
+      holder.appendChild(iframe);
     }
-  ];
-
-  const chosen = mediaOptions[Math.floor(Math.random() * mediaOptions.length)];
-  const holder = document.getElementById("media-holder");
-
-  if (chosen.type === "image") {
-    const img = document.createElement("img");
-    img.src = chosen.src;
-    img.className = "media";
-    holder.appendChild(img);
-  } else if (chosen.type === "embed") {
-    const iframe = document.createElement("iframe");
-    iframe.src = chosen.src;
-    iframe.width = "100%";
-    iframe.height = "360";
-    iframe.allow = "autoplay";
-    iframe.setAttribute("allowfullscreen", true);
-    iframe.setAttribute("frameborder", "0");
-    iframe.className = "media";
-    holder.appendChild(iframe);
-  }
   </script>
 </body>
 </html>
